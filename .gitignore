@@ -1,0 +1,4 @@
+# .gitignore
+gen_summary_app/static/models/*
+gen_title_app/static/models/*
+train_summary/pretrain_model/*

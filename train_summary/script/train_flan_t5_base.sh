@@ -1,0 +1,19 @@
+python code/run_summarization.py \
+    --model_name_or_path pretrain_model/flan-t5-base \
+    --do_train \
+    --do_eval \
+    --num_train_epochs 6.0 \
+    --train_file data/train.json \
+    --validation_file data/dev.json \
+    --text_column 原文 \
+    --summary_column 英文整编 \
+    --source_prefix "summarize: " \
+    --output_dir tst-summarization/flan_t5_base_checkpoint \
+    --evaluation_strategy "steps" \
+    --eval_steps 300 \
+    --per_device_train_batch_size=4 \
+    --per_device_eval_batch_size=4 \
+    --save_total_limit 3 \
+    --overwrite_output_dir \
+    --metric_for_best_model rouge1 \
+    --predict_with_generate

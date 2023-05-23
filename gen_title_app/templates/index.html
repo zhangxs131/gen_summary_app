@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <title>生成中文文本摘要</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h1>生成中文文本摘要</h1>
+    <form>
+      <label for="text">输入文本：</label>
+      <textarea id="text"></textarea>
+      <button type="button" id="submit">生成摘要</button>
+      <button type="button" id="restart">重新加载模型</button>
+    </form>
+    <div id="result"></div>
+    <form>
+      <label for="summary">摘要结果：</label>
+      <textarea id="summary" readonly></textarea>
+    </form>
+    <script>
+      $(document).ready(function() {
+        $('#submit').click(function() {
+          var text = $('#text').val();
+          $.ajax({
+            url: '/summary',
+            type: 'POST',
+            data: { text: text },
+            success: function(response) {
+              $('#summary').val(response['summary']);
+            },
+            error: function(error) {
+              alert('生成摘要失败');
+            }
+          });
+        });
+        $('#restart').click(function() {
+          $.ajax({
+            url: '/restart_model',
+            type: 'POST',
+            success: function(response) {
+              alert(response);
+            },
+            error: function(error) {
+              alert('重新加载模型失败');
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
